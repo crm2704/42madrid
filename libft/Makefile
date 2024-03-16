@@ -1,24 +1,11 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: crubio <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/16 13:18:14 by crubio            #+#    #+#              #
-#    Updated: 2024/03/16 13:18:16 by crubio           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE = libft.h
-SRCS = ft_bzero.c \
-		ft_split.c \
-        ft_isalpha.c \
-       	ft_isalnum.c \
+SRCS = ft_split.c \
+#       ft_isalpha.c \
+      	ft_isalnum.c \
         ft_isascii.c \
         ft_isdigit.c \
         ft_isprint.c \
@@ -41,6 +28,7 @@ SRCS = ft_bzero.c \
         ft_putstr_fd.c \
         ft_putendl_fd.c \
         ft_calloc.c \
+        ft_bzero.c \
         ft_strdup.c \
         ft_strjoin.c \
         ft_subtr.c \

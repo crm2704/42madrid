@@ -13,13 +13,14 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <ctype.h>
+# include <stddef.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <ctype.h>
 
-
+// size_t	ft_strlen(const char *s);
+char	**ft_split(char const *s, char c);
 
 #endif

@@ -20,7 +20,6 @@
 # include <string.h>
 # include <unistd.h>
 
-// size_t	ft_strlen(const char *s);
 int		ft_isalpha(int c);
 char	**ft_split(char const *s, char c);
 int		ft_isdigit(int c);
@@ -32,5 +31,8 @@ int		ft_tolower(int c);
 char	*ft_strchr(char *s, int c);
 char	*ft_strrchr(char *s, int c);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
+void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memchr(const void *s, int c, size_t n);
+void	ft_bzero(void *s, size_t n);
 
 #endif

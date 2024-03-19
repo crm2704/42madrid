@@ -6,7 +6,7 @@
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 16:11:35 by crubio            #+#    #+#             */
-/*   Updated: 2024/03/18 17:16:31 by crubio           ###   ########.fr       */
+/*   Updated: 2024/03/19 12:45:13 by crm2704          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ static size_t	ft_strlen_aux(char const *s, char c, int i)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	n;
-	size_t	i;
+	long	n;
+	long	i;
 	char	**res;
 
 	n = ft_count_words(s, c);
@@ -104,10 +104,10 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (aux(s, res, c));
 }
-
+/*
 void	ft_print_result(char const *s)
 {
-	int		len;
+	int	len;
 
 	len = 0;
 	while (s[len])
@@ -115,7 +115,7 @@ void	ft_print_result(char const *s)
 	write(1, s, len);
 }
 
-int		main(int argc, const char *argv[])
+int	main(int argc, const char *argv[])
 {
 	char	**tabstr;
 	int		i;
@@ -140,7 +140,9 @@ int		main(int argc, const char *argv[])
 	}
 	else if (arg == 2)
 	{
-		if (!(tabstr = ft_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse", ' ')))
+		if (!(tabstr = ft_split("lorem ipsum dolor sit amet,
+					consectetur adipiscing elit. Sed non risus. Suspendisse",
+					' ')))
 			ft_print_result("NULL");
 		else
 		{
@@ -154,7 +156,9 @@ int		main(int argc, const char *argv[])
 	}
 	else if (arg == 3)
 	{
-		if (!(tabstr = ft_split("   lorem   ipsum dolor     sit amet, consectetur   adipiscing elit. Sed non risus. Suspendisse   ", ' ')))
+		if (!(tabstr = ft_split("   lorem   ipsum dolor     sit amet,
+					consectetur   adipiscing elit. Sed non risus. Suspendisse   ",
+					' ')))
 			ft_print_result("NULL");
 		else
 		{
@@ -168,7 +172,11 @@ int		main(int argc, const char *argv[])
 	}
 	else if (arg == 4)
 	{
-		if (!(tabstr = ft_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultricies diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'i')))
+		if (!(tabstr = ft_split("lorem ipsum dolor sit amet,
+					consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+					dignissim sit amet, adipiscing nec, ultricies sed,
+					dolor. Cras elementum ultricies diam. Maecenas ligula massa,
+					varius a, semper congue, euismod non, mi.", 'i')))
 			ft_print_result("NULL");
 		else
 		{
@@ -182,7 +190,11 @@ int		main(int argc, const char *argv[])
 	}
 	else if (arg == 5)
 	{
-		if (!(tabstr = ft_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultricies diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'z')))
+		if (!(tabstr = ft_split("lorem ipsum dolor sit amet,
+					consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+					dignissim sit amet, adipiscing nec, ultricies sed,
+					dolor. Cras elementum ultricies diam. Maecenas ligula massa,
+					varius a, semper congue, euismod non, mi.", 'z')))
 			ft_print_result("NULL");
 		else
 		{
@@ -204,3 +216,4 @@ int		main(int argc, const char *argv[])
 	}
 	return (0);
 }
+*/

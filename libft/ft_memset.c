@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: crm2704 <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:58:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/03/16 17:58:20 by crubio           ###   ########.fr       */
+/*   Created: 2024/03/19 13:47:41 by crm2704           #+#    #+#             */
+/*   Updated: 2024/03/19 13:47:59 by crm2704          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t			i;
 	unsigned char	*p;
 
-	i = 0;
 	p = s;
+	i = 0;
 	while (i < n)
 	{
-		p[i] = '\0';
-		i++;
+		*(p + i) = (unsigned char)c;
+        i++;
 	}
+	return (s);
 }
+/*
+int	main(int argc, char const *argv[])
+{
+	int		n;
+	void	*s;
+
+	n = 6;
+	s = malloc(6);
+	printf("%02x\n", s);
+	ft_memset(s, 34, n);
+	printf("%02x\n", s);
+	return (0);
+}
+*/

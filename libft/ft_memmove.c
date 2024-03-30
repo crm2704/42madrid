@@ -1,48 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crm2704 <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 20:15:07 by crm2704           #+#    #+#             */
-/*   Updated: 2024/03/24 22:12:19 by crm2704          ###   ########.fr       */
+/*   Created: 2024/03/30 17:42:06 by crubio            #+#    #+#             */
+/*   Updated: 2024/03/30 17:42:09 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, void *src, size_t n)
+void	*ft_memmove(void *dst, void *src, size_t len)
 {
-	size_t			i;
 	unsigned char	*d;
 	unsigned char	*s;
+	size_t			i;
 
-	if (src == NULL && dest == NULL)
+	if (dst == NULL && src == NULL)
 		return (NULL);
-	i = 0;
-	d = dest;
 	s = src;
-	while (i < n)
+	d = dst;
+	i = 0;
+	if (s < d && s + len > d)
 	{
-		d[i] = s[i];
-		i++;
+		i = len;
+		while (i > 0)
+		{
+			d[i - 1] = s[i - 1];
+			i--;
+		}
 	}
-	return (dest);
+	else
+	{
+		i = 0;
+		while (i < len)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
+	return (dst);
 }
 /*
 int	main(int argc, char const *argv[])
 {
 	char	*src;
-	char	dest[] = "adios";
+	char	dest[] = "inonon";
 	char	*s1;
-	char	*s2;
 
-	src = "hola";
-	s1 = ft_memcpy(((void *)0), ((void *)0), 0);
-	s2 = memcpy(((void *)0), ((void *)0), 0);
+	src = "hol";
+	s1 = ft_memmove(dest, src, 4);
 	printf("%s\n", s1);
-	printf("%s\n", s2);
 	return (0);
 }
 */

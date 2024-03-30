@@ -21,10 +21,11 @@ SRCS =  ft_split.c \
         ft_strlen.c \
         ft_memcpy.c \
         ft_memcmp.c \
-#        ft_memmove.c \
-        ft_strnstr.c \
-        ft_strlcat.c \
+        ft_memmove.c \
         ft_strlcpy.c \
+        ft_strlcat.c \
+        ft_atoi.c \
+#        ft_strnstr.c \
         ft_putchar_fd.c \
         ft_putendl_fd.c \
         ft_putstr_fd.c \

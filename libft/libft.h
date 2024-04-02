@@ -42,5 +42,7 @@ size_t	ft_strlcpy(char *dest, char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 int		ft_atoi(char *nptr);
 char	*ft_strnstr(char *haystack, char *needle, size_t len);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strdup(char *s1);
 
 #endif

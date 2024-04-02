@@ -41,5 +41,6 @@ void	*ft_memmove(void *dst, void *src, size_t len);
 size_t	ft_strlcpy(char *dest, char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 int		ft_atoi(char *nptr);
+char	*ft_strnstr(char *haystack, char *needle, size_t len);
 
 #endif

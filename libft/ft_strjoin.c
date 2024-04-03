@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crm2704 <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 14:22:01 by crm2704           #+#    #+#             */
-/*   Updated: 2024/03/19 14:22:17 by crm2704          ###   ########.fr       */
+/*   Created: 2024/04/03 19:11:47 by crubio            #+#    #+#             */
+/*   Updated: 2024/04/03 19:11:49 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t				i;
-	unsigned const char	*p;
+	char	*ans;
+	int		i;
+	int		j;
 
-	p = s;
+	ans = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (ans == NULL)
+		return (NULL);
 	i = 0;
-	while (i < n)
+	while (s1[i])
 	{
-		if (p[i] == (unsigned char)c)
-		{
-			return ((void *)(p + i));
-		}
+		ans[i] = s1[i];
 		i++;
 	}
-	return (0);
+	j = 0;
+	while (s2[j])
+	{
+		ans[i] = s2[j];
+		i++;
+		j++;
+	}
+	ans[i] = '\0';
+	return (ans);
 }

@@ -47,11 +47,13 @@ static int	ft_calc(int cont_sub, char *num, char *str)
 
 	i = 0;
 	j = 0;
-	while ((str[i] >= '\a' && str[i] <= '\r') || str[i] == ' ')
+	while (str[i] == '\n' || str[i] == '	'
+		|| str[i] == '\v' || str[i] == '\f'
+		|| str[i] == '\r' || str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
-		if(str[i] == '-')
+		if (str[i] == '-')
 			cont_sub = -1;
 		i++;
 	}
@@ -68,7 +70,14 @@ int	ft_atoi(char *nptr)
 {
 	int		cont_sub;
 	char	num[255];
+	int		i;
 
+	i = 0;
+	while (i < 255)
+	{
+		num[i] = 0;
+		i++;
+	}
 	cont_sub = 1;
 	return (ft_calc(cont_sub, num, nptr));
 }
@@ -79,7 +88,7 @@ int	main(int argc, char const *argv[])
 	int		n1;
 	int		n2;
 
-	str = "\v 12";
+	str = "/r 121";
 	n1 = ft_atoi(str);
 	n2 = atoi(str);
 	printf("%d, %d\n", n1, n2);

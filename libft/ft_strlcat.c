@@ -22,8 +22,6 @@ size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
 	j = 0;
 	if ((ft_strlen(src) + dstsize) < (ft_strlen(src) + ft_strlen(dst))
 		&& dstsize < (ft_strlen(src) + ft_strlen(dst)))
-		// si dstsize es
-		//-1 se conviete en el maximo long y tengo que hacer la comprobacion esècial por eso.
 		res = ft_strlen(src) + dstsize;
 	else
 		res = ft_strlen(src) + ft_strlen(dst);

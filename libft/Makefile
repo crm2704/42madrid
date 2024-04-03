@@ -28,13 +28,13 @@ SRCS =  ft_split.c \
         ft_strnstr.c \
         ft_calloc.c \
         ft_strdup.c \
+        ft_substr.c \
+        ft_strjoin.c \
 #        ft_putchar_fd.c \
+        ft_strtrim.c \
         ft_putendl_fd.c \
         ft_putstr_fd.c \
         ft_putendl_fd.c \
-        ft_strjoin.c \
-        ft_subtr.c \
-        ft_strtrim.c \
         ft_putnbr_fd.c \
         ft_itoa.c \
 		ft_striteri \

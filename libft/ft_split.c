@@ -53,6 +53,8 @@ static size_t	ft_count_words(char *s, char c)
 	size_t	i;
 	size_t	cont;
 
+	if (s[0] == '\0')
+		return (0);
 	i = 1;
 	cont = 0;
 	while (s[i])
@@ -103,7 +105,7 @@ int	main(void)
 {
 	char	**tabstr;
 	int		i;
-	char	test_chars[] = {',', ',', ',', ',', ',', 'a', '\0'};
+	char	test_chars[] = {',', ',', ',', ',', 'a', '\0'};
 	int		j;
 
 	char	*test_strings[] = {"Hello, world", "foo,bar,baz", "",

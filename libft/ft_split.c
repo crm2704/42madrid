@@ -12,37 +12,40 @@
 
 #include "libft.h"
 
-static char	**aux(char *s, char **res, char c)
+static void	*ft_memok(char **ans, size_t i)
 {
-	size_t	i;
-	size_t	j;
-	size_t	r;
+	i = (int)i;
+	while (i >= 0)
+	{
+		free(ans[i]);
+		i--;
+	}
+	free(ans);
+	return (NULL);
+}
+
+static void	ft_putstr(char *s, char *dst, size_t start, size_t end)
+{
+	int	i;
 
 	i = 0;
-	j = 0;
-	r = 0;
-	while (s[r])
+	while (start < end)
 	{
-		if (s[r] == c)
-		{
-			if (j > 0)
-			{
-				res[i][j] = '\0';
-				i++;
-			}
-			j = 0;
-			r++;
-		}
-		else
-		{
-			res[i][j] = s[r];
-			j++;
-			r++;
-		}
+		dst[i] = s[start];
+		i++;
+		start++;
 	}
-	if (j > 0)
-		res[i][j] = '\0';
-	return (res);
+	dst[i] = '\0';
+}
+
+static size_t	ft_strlen_aux(char *s, char c, size_t i)
+{
+	size_t	j;
+
+	j = i;
+	while (s[j] && s[j] != c)
+		j++;
+	return (j - i);
 }
 
 static size_t	ft_count_words(char *s, char c)
@@ -63,60 +66,70 @@ static size_t	ft_count_words(char *s, char c)
 	return (cont);
 }
 
-static size_t	ft_strlen_aux(char *s, char c, int i)
-{
-	size_t	j;
-
-	j = i;
-	while (s[j] && s[j] != c)
-		j++;
-	return (j - i);
-}
-
 char	**ft_split(char *s, char c)
 {
-	long	n;
-	long	i;
-	char	**res;
-	int		pos;
-	int		m;
+	char	**ans;
+	size_t	i;
+	size_t	pos;
+	size_t	s_len;
+	size_t	s_i_len;
 
-	n = ft_count_words(s, c);
-	res = malloc((n + 1) * sizeof(char *));
-	if (res == NULL)
+	ans = malloc((ft_count_words(s, c) + 1) * sizeof(char *));
+	if (ans == NULL)
 		return (NULL);
 	i = 0;
 	pos = 0;
-	m = 0;
-	while (i < n)
+	s_len = ft_strlen(s);
+	while (pos < s_len)
 	{
-		m = ft_strlen_aux(s, c, pos) + 1;
-		res[i] = malloc((m) * sizeof(char));
-		pos += m;
-		if (res[i] == NULL)
+		s_i_len = ft_strlen_aux(s, c, pos);
+		if (s_i_len > 0)
 		{
-			while (--n >= 0)
-				free(res[n]);
-			return (free(res), NULL);
+			ans[i] = malloc((s_i_len + 1) * sizeof(char));
+			if (ans[i] == NULL)
+				return (ft_memok(ans, i));
+			ft_putstr(s, ans[i], pos, pos + s_i_len);
+			pos += s_i_len;
+			i++;
 		}
-		i++;
+		else
+			pos++;
 	}
-	return (aux(s, res, c));
+	ans[i] = NULL;
+	return (ans);
 }
 /*
 int	main(void)
 {
 	char	**tabstr;
 	int		i;
+	char	test_chars[] = {',', ',', ',', ',', ',', 'a', '\0'};
+	int		j;
 
+	char	*test_strings[] = {"Hello, world", "foo,bar,baz", "",
+			"a,b,c,d,e,f,g", "", NULL};
 	i = 0;
-	if (!(tabstr = ft_split("hello!", ' ')))
-		printf("NULL\n");
-	else
-		printf("GOOD\n");
-	while(tabstr[i])
+	while (test_strings[i] != NULL)
 	{
-		printf("%s\n", tabstr[i++]);
+		printf("Testing with string: %s and split char: %c\n", test_strings[i],
+			test_chars[i]);
+		tabstr = ft_split(test_strings[i], test_chars[i]);
+		if (tabstr == NULL)
+		{
+			printf("ft_split returned NULL\n");
+		}
+		else
+		{
+			j = 0;
+			while (tabstr[j])
+			{
+				printf("Split word %d: %s\n", j, tabstr[j]);
+				free(tabstr[j]);
+				j++;
+			}
+			free(tabstr);
+		}
+		i++;
 	}
 	return (0);
 }

@@ -12,33 +12,87 @@
 
 #include "libft.h"
 
+static int	ft_check_num_len(int n)
+{
+	int	cont;
+
+	cont = 0;
+	while (n / 10 != 0)
+	{
+		cont++;
+		n /= 10;
+	}
+	return (cont + 1);
+}
+
+static void	ft_chrnum(char *s, int n, int len)
+{
+	s[len] = '\0';
+	len--;
+	while (n / 10 != 0)
+	{
+		s[len] = (n % 10) + '0';
+		n /= 10;
+		len--;
+	}
+	s[len] = n + '0';
+}
+
 char	*ft_itoa(int n)
 {
+	int		len;
 	char	*ans;
-	int		i;
 	int		neg;
 
 	neg = 0;
-	if (n < 0)
+	if (n == -2147483648)
+    {
+        ans = malloc(12 * sizeof(char));
+        if (ans != NULL)
+            ft_strlcpy(ans, "-2147483648", 12);
+        return ans;
+    }
+	len = ft_check_num_len(n);
+	if (n >= 0)
+		ans = malloc((len + 1) * sizeof(char));	
+	else
 	{
+		ans = malloc((len + 2) * sizeof(char));
+		n *= -1;
 		neg = 1;
-		n = -n;
+		len++;
 	}
-	i = 1;
-	while (n / i >= 10)
-		i *= 10;
-	ans = (char *)malloc((i + neg + 1) * sizeof(char));
-	if (!ans)
-		return (NULL);
-	if (neg)
-		ans[0] = '-';
-	while (i >= 1)
+	if (ans == NULL)
+			return NULL;
+	ft_chrnum(ans, n, len);
+	if (neg == 1)
 	{
-		ans[neg] = n / i + '0';
-		n %= i;
-		i /= 10;
-		neg++;
+		ans[0] = '-';
+		return (ans);
 	}
-	ans[neg] = '\0';
 	return (ans);
 }
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include "libft.h"
+
+int main() {
+    int test_cases[] = {0, 1, -1, 12345, -12345, INT_MAX, INT_MIN};
+    int num_test_cases = sizeof(test_cases) / sizeof(test_cases[0]);
+
+    for (int i = 0; i < num_test_cases; i++) {
+        int num = test_cases[i];
+        char *str = ft_itoa(num);
+        if (str == NULL) {
+            printf("Test case %d: Memory allocation failed\n", i + 1);
+            continue;
+        }
+        printf("Test case %d: The string representation of %d is %s\n", i + 1, num, str);
+        free(str);
+    }
+
+    return 0;
+}
+*/

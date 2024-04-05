@@ -12,9 +12,8 @@
 
 #include "libft.h"
 
-static void	*ft_memok(char **ans, size_t i)
+static void	*ft_memok(char **ans, int i)
 {
-	i = (int)i;
 	while (i >= 0)
 	{
 		free(ans[i]);
@@ -89,7 +88,7 @@ char	**ft_split(char *s, char c)
 		{
 			ans[i] = malloc((s_i_len + 1) * sizeof(char));
 			if (ans[i] == NULL)
-				return (ft_memok(ans, i));
+				return (ft_memok(ans, (int)i));
 			ft_putstr(s, ans[i], pos, pos + s_i_len);
 			pos += s_i_len;
 			i++;

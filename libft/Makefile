@@ -36,19 +36,27 @@ SRCS =  ft_split.c \
 	ft_striteri.c \
         ft_putchar_fd.c \
         ft_putstr_fd.c \
-#        ft_putendl_fd.c \
         ft_putendl_fd.c \
         ft_putnbr_fd.c \
 
+BONUS_SRCS = ft_lstnew.c \
+
 OBJS = $(SRCS:.c=.o)
 
-all:$(NAME)
+BONUS_OBJS = $(BONUS_SRCS: .c=.o)
+
+all:$(NAME) bonus
+
+bonus: %(BONUS_OBJS) $(INCLUDE)
+
 
 $(NAME):$(OBJS) $(INCLUDE)
 	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+
 
 fclean: clean
 	rm -f $(NAME)

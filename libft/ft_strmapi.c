@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char *s, char (*f)(unsigned int, char))
 {
-	unsigned int i;
-	char *new_str;
+	unsigned int	i;
+	char			*new_str;
 
 	if (!s || !f)
 		return (NULL);
@@ -32,23 +32,26 @@ char	*ft_strmapi(char *s, char (*f)(unsigned int, char))
 	return (new_str);
 }
 /*
-char test_func(unsigned int i, char c)
+char	test_func(unsigned int i, char c)
 {
-    return c + 1;
+	return (c + 1);
 }
 
-int main()
+int	main(void)
 {
-    char *str = "123";
-    char *new_str = ft_strmapi(str, test_func);
-    if (new_str == NULL)
-    {
-        printf("Memory allocation failed\n");
-        return 1;
-    }
-    printf("Original string: %s\n", str);
-    printf("New string: %s\n", new_str);
-    free(new_str);
-    return 0;
+	char	*str;
+	char	*new_str;
+
+	str = "123";
+	new_str = ft_strmapi(str, test_func);
+	if (new_str == NULL)
+	{
+		printf("Memory allocation failed\n");
+		return (1);
+	}
+	printf("Original string: %s\n", str);
+	printf("New string: %s\n", new_str);
+	free(new_str);
+	return (0);
 }
 */

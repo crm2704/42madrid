@@ -46,15 +46,15 @@ char	*ft_itoa(int n)
 
 	neg = 0;
 	if (n == -2147483648)
-    {
-        ans = malloc(12 * sizeof(char));
-        if (ans != NULL)
-            ft_strlcpy(ans, "-2147483648", 12);
-        return ans;
-    }
+	{
+		ans = malloc(12 * sizeof(char));
+		if (ans != NULL)
+			ft_strlcpy(ans, "-2147483648", 12);
+		return (ans);
+	}
 	len = ft_check_num_len(n);
 	if (n >= 0)
-		ans = malloc((len + 1) * sizeof(char));	
+		ans = malloc((len + 1) * sizeof(char));
 	else
 	{
 		ans = malloc((len + 2) * sizeof(char));
@@ -63,7 +63,7 @@ char	*ft_itoa(int n)
 		len++;
 	}
 	if (ans == NULL)
-			return NULL;
+		return (NULL);
 	ft_chrnum(ans, n, len);
 	if (neg == 1)
 	{
@@ -73,26 +73,27 @@ char	*ft_itoa(int n)
 	return (ans);
 }
 /*
+#include "libft.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
-#include "libft.h"
 
-int main() {
-    int test_cases[] = {0, 1, -1, 12345, -12345, INT_MAX, INT_MIN};
-    int num_test_cases = sizeof(test_cases) / sizeof(test_cases[0]);
+int	main(void) {
+	int test_cases[] = {0, 1, -1, 12345, -12345, INT_MAX, INT_MIN};
+	int num_test_cases = sizeof(test_cases) / sizeof(test_cases[0]);
 
-    for (int i = 0; i < num_test_cases; i++) {
-        int num = test_cases[i];
-        char *str = ft_itoa(num);
-        if (str == NULL) {
-            printf("Test case %d: Memory allocation failed\n", i + 1);
-            continue;
-        }
-        printf("Test case %d: The string representation of %d is %s\n", i + 1, num, str);
-        free(str);
-    }
+	for (int i = 0; i < num_test_cases; i++) {
+		int num = test_cases[i];
+		char *str = ft_itoa(num);
+		if (str == NULL) {
+			printf("Test case %d: Memory allocation failed\n", i + 1);
+			continue ;
+		}
+		printf("Test case %d: The string representation of %d is %s\n", i + 1,
+			num, str);
+		free(str);
+	}
 
-    return 0;
+	return (0);
 }
 */

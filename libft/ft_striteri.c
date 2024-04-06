@@ -22,7 +22,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		while (s[i])
 		{
 			f(i, &s[i]);
-            i++;
+			i++;
 		}
 	}
 }
@@ -34,7 +34,8 @@ void	test_func(unsigned int i, char *c)
 
 int	main(void)
 {
-	char str[] = "Hello, World!";
+	char	str[] = "Hello, World!";
+
 	ft_striteri(str, test_func);
 	printf("Modified string: %s\n", str);
 	return (0);

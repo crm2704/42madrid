@@ -14,23 +14,25 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-    if(fd != -1)
-        write(fd, &c, 1);
+	if (fd != -1)
+		write(fd, &c, 1);
 }
 /*
-#include <fcntl.h>
 #include "libft.h"
+#include <fcntl.h>
 
-int main()
+int	main(void)
 {
-    int fd = open("testfile.txt", O_WRONLY | O_CREAT, 0644);
-    if (fd == -1)
-    {
-        perror("Error opening file");
-        return 1;
-    }
-    ft_putchar_fd('A', fd);
-    close(fd);
-    return 0;
+	int	fd;
+
+	fd = open("testfile.txt", O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		return (1);
+	}
+	ft_putchar_fd('A', fd);
+	close(fd);
+	return (0);
 }
 */

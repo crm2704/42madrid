@@ -43,11 +43,12 @@ BONUS_SRCS = ft_lstnew.c \
 
 OBJS = $(SRCS:.c=.o)
 
-BONUS_OBJS = $(BONUS_SRCS: .c=.o)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
-all:$(NAME) bonus
+all:$(NAME)
 
-bonus: %(BONUS_OBJS) $(INCLUDE)
+bonus: $(BONUS_OBJS) $(INCLUDE)
+	ar rcs $(NAME) $(BONUS_OBJS)
 
 
 $(NAME):$(OBJS) $(INCLUDE)
@@ -62,6 +63,6 @@ fclean: clean
 	rm -f $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 re: fclean all

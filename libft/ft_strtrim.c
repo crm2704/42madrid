@@ -26,13 +26,27 @@ static int	ft_in(char c, char *s)
 	return (0);
 }
 
-char	*ft_strtrim(char *s1, char *set)
+char	*ft_aux_strtrim(char *ans, int i, int j, char *s1)
+{
+	int	k;
+
+	k = 0;
+	while (i <= j)
+		ans[k++] = s1[i++];
+	ans[k] = '\0';
+	return (ans);
+}
+
+char	*ft_strtrim(char const *str1, char const *setstr)
 {
 	int		i;
 	int		j;
 	char	*ans;
-	int		k;
+	char	*s1;
+	char	*set;
 
+	s1 = (char *)str1;
+	set = (char *)setstr;
 	i = 0;
 	j = ft_strlen(s1) - 1;
 	while (s1[i] && ft_in(s1[i], set) == 1)
@@ -45,10 +59,7 @@ char	*ft_strtrim(char *s1, char *set)
 		ans = malloc(1);
 	if (ans == NULL)
 		return (NULL);
-	k = 0;
-	while (i <= j)
-		ans[k++] = s1[i++];
-	ans[k] = '\0';
+	ans = ft_aux_strtrim(ans, i, j, s1);
 	return (ans);
 }
 /*

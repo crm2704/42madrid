@@ -66,12 +66,14 @@ static int	ft_calc(int cont_sub, char *num, char *str)
 	return (ft_res(num, cont_sub));
 }
 
-int	ft_atoi(char *nptr)
+int	ft_atoi(const char *nptr)
 {
 	int		cont_sub;
 	char	num[255];
 	int		i;
+	char	*str;
 
+	str = (char *)nptr;
 	i = 0;
 	while (i < 255)
 	{
@@ -79,7 +81,7 @@ int	ft_atoi(char *nptr)
 		i++;
 	}
 	cont_sub = 1;
-	return (ft_calc(cont_sub, num, nptr));
+	return (ft_calc(cont_sub, num, str));
 }
 /*
 int	main(int argc, char const *argv[])

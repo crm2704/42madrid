@@ -12,46 +12,21 @@
 
 #include "libft.h"
 
-static char	*ft_substr_aux(char *s, size_t s_len, unsigned int start,
-		size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ans;
-	int		i;
-	int		j;
+	char	*mem;
 
-	i = start;
-	if (s_len - start < len)
-		ans = malloc((s_len - start + 1) * sizeof(char));
-	else
-		ans = malloc((len + 1) * sizeof(char));
-	j = 0;
-	if (ans == NULL)
-		return (NULL);
-	while (s[i] && (i - start) < len)
-	{
-		ans[j] = s[i];
-		j++;
-		i++;
-	}
-	ans[j] = '\0';
-	return (ans);
-}
-
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	char	*ans;
-	size_t	s_len;
-
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-	{
-		ans = malloc(1);
-		ans[0] = '\0';
-		if (ans == NULL)
-			return (NULL);
-		return (ans);
-	}
-	return (ft_substr_aux(s, s_len, start, len));
+	if (s == 0)
+		return (0);
+	if (ft_strlen(s) < start)
+		return (ft_strdup(""));
+	if (ft_strlen(s + start) < len)
+		len = ft_strlen(s + start);
+	mem = malloc((len + 1) * sizeof(char));
+	if (mem == 0)
+		return (0);
+	ft_strlcpy(mem, s + start, len + 1);
+	return (mem);
 }
 /*
 int	main(void)

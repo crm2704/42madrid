@@ -23,7 +23,7 @@ static void	*ft_memok(char **ans, int i)
 	return (NULL);
 }
 
-static void	ft_putstr(char *s, char *dst, size_t start, size_t end)
+static void	ft_putstr(char const *s, char *dst, size_t start, size_t end)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ static void	ft_putstr(char *s, char *dst, size_t start, size_t end)
 	dst[i] = '\0';
 }
 
-static size_t	ft_strlen_aux(char *s, char c, size_t i)
+static size_t	ft_strlen_aux(char const *s, char c, size_t i)
 {
 	size_t	j;
 
@@ -47,7 +47,7 @@ static size_t	ft_strlen_aux(char *s, char c, size_t i)
 	return (j - i);
 }
 
-static size_t	ft_count_words(char *s, char c)
+static size_t	ft_count_words(char const *s, char c)
 {
 	size_t	i;
 	size_t	cont;
@@ -67,30 +67,26 @@ static size_t	ft_count_words(char *s, char c)
 	return (cont);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**ans;
 	size_t	i;
 	size_t	pos;
-	size_t	s_len;
-	size_t	s_i_len;
 
 	ans = malloc((ft_count_words(s, c) + 1) * sizeof(char *));
 	if (ans == NULL)
 		return (NULL);
 	i = 0;
 	pos = 0;
-	s_len = ft_strlen(s);
-	while (pos < s_len)
+	while (pos < ft_strlen(s))
 	{
-		s_i_len = ft_strlen_aux(s, c, pos);
-		if (s_i_len > 0)
+		if (ft_strlen_aux(s, c, pos) > 0)
 		{
-			ans[i] = malloc((s_i_len + 1) * sizeof(char));
+			ans[i] = malloc((ft_strlen_aux(s, c, pos) + 1) * sizeof(char));
 			if (ans[i] == NULL)
 				return (ft_memok(ans, (int)i));
-			ft_putstr(s, ans[i], pos, pos + s_i_len);
-			pos += s_i_len;
+			ft_putstr(s, ans[i], pos, pos + ft_strlen_aux(s, c, pos));
+			pos += ft_strlen_aux(s, c, pos);
 			i++;
 		}
 		else

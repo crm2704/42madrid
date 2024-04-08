@@ -12,11 +12,13 @@
 
 #include "libft.h"
 
-char	*ft_strmapi(char *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *str, char (*f)(unsigned int, char))
 {
 	unsigned int	i;
 	char			*new_str;
+	char			*s;
 
+	s = (char *)str;
 	if (!s || !f)
 		return (NULL);
 	new_str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));

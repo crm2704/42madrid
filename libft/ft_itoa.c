@@ -38,6 +38,16 @@ static void	ft_chrnum(char *s, int n, int len)
 	s[len] = n + '0';
 }
 
+char	*ft_aux_itoa(char *ans, int n, int len, int neg)
+{
+	if (ans == NULL)
+		return (NULL);
+	ft_chrnum(ans, n, len);
+	if (neg == 1)
+		ans[0] = '-';
+	return (ans);
+}
+
 char	*ft_itoa(int n)
 {
 	int		len;
@@ -62,14 +72,7 @@ char	*ft_itoa(int n)
 		neg = 1;
 		len++;
 	}
-	if (ans == NULL)
-		return (NULL);
-	ft_chrnum(ans, n, len);
-	if (neg == 1)
-	{
-		ans[0] = '-';
-		return (ans);
-	}
+	ans = ft_aux_itoa(ans, n, len, neg);
 	return (ans);
 }
 /*

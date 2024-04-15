@@ -11,3 +11,17 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+static char	*ft_toHex(size_t ptr)
+{
+}
+
+void	ft_putmem(va_list args)
+{
+	size_t	ptr;
+	char	*res;
+
+	ptr = (size_t)va_arg(args, void *);
+	res = ft_toHex(ptr);
+	ft_putstr_fd(res, 1);
+}

@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchr.c                                      :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 19:54:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/14 19:54:38 by crubio           ###   ########.fr       */
+/*   Created: 2024/03/18 17:39:22 by crubio            #+#    #+#             */
+/*   Updated: 2024/03/18 17:39:37 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_putchar(va_list args)
+char	*ft_strchr(const char *s, int ch)
 {
-	char	res;
+	char	*str;
+	char	c;
+	size_t	i;
 
-	res = (char)va_arg(args, int);
-	write(1, &res, 1);
-}
-
-void	ft_putstr(va_list args)
-{
-	char	*res;
-	int		len;
-
-	res = (char *)va_arg(args, char *);
-	ft_putstr_fd(res, 1);
+	str = (char *)s;
+	c = (char)ch;
+	i = 0;
+	while (i < ft_strlen(s))
+	{
+		if (str[i] == c)
+			return (str + i);
+		++i;
+	}
+	if (c == '\0')
+		return (str + i);
+	return (0);
 }

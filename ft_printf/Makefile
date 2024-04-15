@@ -3,11 +3,14 @@ NAME = libftprintf.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE = libftprintf.h
-SRCS = 
+SRCS = 	ft_printf.c \
+		ft_printchr.c \
+		ft_printmem.c
 
 OBJS = $(SRCS:.c=.o)
 
 all:$(NAME)
+	$(MAKE) -C libft
 
 $(NAME):$(OBJS) $(INCLUDE)
 	ar rcs $(NAME) $(OBJS)
@@ -17,9 +20,11 @@ $(NAME):$(OBJS) $(INCLUDE)
 
 fclean: clean clean_bonus
 	rm -f $(NAME)
+	$(MAKE) fclean -C libft
 
 clean:
 	rm -f $(OBJS)
+	$(MAKE) clean -C libft
 
 clean_bonus:
 	rm -f $(BONUS_OBJS)

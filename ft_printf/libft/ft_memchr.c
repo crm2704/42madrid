@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchr.c                                      :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: crm2704 <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 19:54:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/14 19:54:38 by crubio           ###   ########.fr       */
+/*   Created: 2024/03/19 14:22:01 by crm2704           #+#    #+#             */
+/*   Updated: 2024/03/19 14:22:17 by crm2704          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_putchar(va_list args)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	res;
+	size_t				i;
+	unsigned const char	*p;
 
-	res = (char)va_arg(args, int);
-	write(1, &res, 1);
-}
-
-void	ft_putstr(va_list args)
-{
-	char	*res;
-	int		len;
-
-	res = (char *)va_arg(args, char *);
-	ft_putstr_fd(res, 1);
+	p = s;
+	i = 0;
+	while (i < n)
+	{
+		if (p[i] == (unsigned char)c)
+		{
+			return ((void *)(p + i));
+		}
+		i++;
+	}
+	return (0);
 }

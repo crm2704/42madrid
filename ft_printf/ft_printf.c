@@ -12,33 +12,49 @@
 
 #include "libftprintf.h"
 
-int    ft_printf(char const *format, ...)
+static void	ft_choose_option(char c, va_list args)
 {
-    size_t punct;
-    void *ptr;
-    ptr = (void *)format;
-    punct = (size_t)ptr;
+	char	res;
 
-    size_t i;
-    i = 0x77;
-    printf("%zu\n", i);
-    printf("%p\n", ptr);
-    printf("%lu\n", punct);
-    return (0);
+	if (c == 'c')
+		ft_putchar(args);
+	else if (c == 's')
+		ft_putstr(args);
+	else if (c == 'p')
+		ft_putmem(args);
 }
 
-int ft_strlen(char const *str)
+int	ft_printf(char const *format, ...)
 {
-    int i;
+	int		i;
+	int		j;
+	int		ans;
+	va_list	args;
 
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	i = 0;
+	j = 0;
+	va_start(args, format);
+	while (format[i])
+	{
+		if (format[i] != '%')
+			write(1, &format[i], 1);
+		else
+		{
+			i++;
+			ft_choose_option(format[i], args);
+		}
+		i++;
+	}
+	ans = ft_strlen(format);
+	return (ans);
 }
 
-int main(int argc, char const *argv[])
+int	main(void)
 {
-    ft_printf("Hello, World!\n");
-    return 0;
+	char	*res;
+
+	res = "hola";
+	printf("Messi %d, %c %s, direccion %d\n", 10, 'c', "hola", 0xb7);
+	ft_printf("s, %c, %s, %p\n", 'i', "hola", res);
+	return (0);
 }

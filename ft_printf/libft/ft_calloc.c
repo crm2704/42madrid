@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchr.c                                      :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 19:54:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/14 19:54:38 by crubio           ###   ########.fr       */
+/*   Created: 2024/04/02 15:36:36 by crubio            #+#    #+#             */
+/*   Updated: 2024/04/02 15:36:38 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_putchar(va_list args)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	res;
+	size_t			total;
+	unsigned char	*ans;
+	size_t			i;
 
-	res = (char)va_arg(args, int);
-	write(1, &res, 1);
-}
-
-void	ft_putstr(va_list args)
-{
-	char	*res;
-	int		len;
-
-	res = (char *)va_arg(args, char *);
-	ft_putstr_fd(res, 1);
+	total = count * size;
+	ans = malloc(total);
+	if (ans != NULL)
+	{
+		i = 0;
+		while (i < total)
+		{
+			ans[i] = 0;
+			i++;
+		}
+	}
+	return (ans);
 }

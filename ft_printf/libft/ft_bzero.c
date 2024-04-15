@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchr.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 19:54:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/14 19:54:38 by crubio           ###   ########.fr       */
+/*   Created: 2024/03/16 17:58:17 by crubio            #+#    #+#             */
+/*   Updated: 2024/03/16 17:58:20 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_putchar(va_list args)
+void	ft_bzero(void *s, size_t n)
 {
-	char	res;
+	size_t			i;
+	unsigned char	*p;
 
-	res = (char)va_arg(args, int);
-	write(1, &res, 1);
-}
-
-void	ft_putstr(va_list args)
-{
-	char	*res;
-	int		len;
-
-	res = (char *)va_arg(args, char *);
-	ft_putstr_fd(res, 1);
+	i = 0;
+	p = s;
+	while (i < n)
+	{
+		p[i] = '\0';
+		i++;
+	}
 }

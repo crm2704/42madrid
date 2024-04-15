@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchr.c                                      :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 19:54:17 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/14 19:54:38 by crubio           ###   ########.fr       */
+/*   Created: 2024/04/02 15:48:02 by crubio            #+#    #+#             */
+/*   Updated: 2024/04/02 15:48:04 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_putchar(va_list args)
+char	*ft_strdup(char const *s)
 {
-	char	res;
+	size_t	total;
+	size_t	i;
+	char	*ans;
+	char	*s1;
 
-	res = (char)va_arg(args, int);
-	write(1, &res, 1);
-}
-
-void	ft_putstr(va_list args)
-{
-	char	*res;
-	int		len;
-
-	res = (char *)va_arg(args, char *);
-	ft_putstr_fd(res, 1);
+	s1 = (char *)s;
+	total = ft_strlen(s1) + 1;
+	ans = malloc(total);
+	if (ans != NULL)
+	{
+		i = 0;
+		while (i < total)
+		{
+			ans[i] = 0;
+			i++;
+		}
+	}
+	else
+		return (NULL);
+	ft_strlcpy(ans, s1, total);
+	return (ans);
 }

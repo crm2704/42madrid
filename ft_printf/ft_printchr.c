@@ -23,7 +23,6 @@ void	ft_putchar(va_list args)
 void	ft_putstr(va_list args)
 {
 	char	*res;
-	int		len;
 
 	res = (char *)va_arg(args, char *);
 	ft_putstr_fd(res, 1);

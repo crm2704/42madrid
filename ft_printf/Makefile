@@ -5,7 +5,8 @@ CFLAGS = -Wall -Wextra -Werror
 INCLUDE = libftprintf.h
 SRCS = 	ft_printf.c \
 		ft_printchr.c \
-		ft_printmem.c
+		ft_printmem.c \
+		ft_printnbr.c
 
 OBJS = $(SRCS:.c=.o)
 

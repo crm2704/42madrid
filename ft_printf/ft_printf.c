@@ -15,23 +15,23 @@
 static void	ft_choose_option(char c, va_list args)
 {
 	if (c == 'c')
-		ft_putchar(args); // done
+		ft_putchar(args);
 	else if (c == 's')
-		ft_putstr(args); // done
+		ft_putstr(args);
 	else if (c == 'p')
-		ft_putmem(args); //
-	/*else if (c == 'd')
-		ft_putnbr(args); //
+		ft_putmem(args);
+	else if (c == 'd')
+		ft_putnbr(args);
 	else if (c == 'i')
-		ft_putint(args); //
+		ft_putnbr(args);
 	else if (c == 'u')
-		ft_putunsigned(args); //
+		ft_putunsigned(args);
 	else if (c == 'x')
-		ft_puthex(args); //
+		ft_puthex(args, 0);
 	else if (c == 'X')
-		ft_putHEX(args); //*/
+		ft_puthex(args, 1);
 	else if (c == '%')
-		write(1, "%", 1); // done
+		write(1, "%", 1);
 }
 
 int	ft_printf(char const *format, ...)
@@ -62,8 +62,10 @@ int	main(void)
 	char	*res;
 
 	res = "hola";
-	printf("Messi %p, %c\n", &res, 'c');
-	ft_printf("Messi %p, %c\n", &res, 'c');
+	printf("Messi %p, %c, %d, %i, %u, %x, %X\n", &res, 'c', 077, 067,
+		-27198912, 3287421, 3287421);
+	ft_printf("Messi %p, %c, %d, %i, %u, %x, %X\n", &res, 'c', 077, 067,
+		-27198912, 3287421, 3287421);
 	return (0);
 }
 */

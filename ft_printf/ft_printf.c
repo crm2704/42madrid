@@ -10,28 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-static void	ft_choose_option(char c, va_list args)
+static int	ft_choose_option(char c, va_list args)
 {
 	if (c == 'c')
-		ft_putchar(args);
+		return (ft_putchar(args));
 	else if (c == 's')
-		ft_putstr(args);
+		return (ft_putstr(args));
 	else if (c == 'p')
-		ft_putmem(args);
+		return (ft_putmem(args));
 	else if (c == 'd')
-		ft_putnbr(args);
+		return (ft_putnbr(args));
 	else if (c == 'i')
-		ft_putnbr(args);
+		return (ft_putnbr(args));
 	else if (c == 'u')
-		ft_putunsigned(args);
+		return (ft_putunsigned(args));
 	else if (c == 'x')
-		ft_puthex(args, 0);
+		return (ft_puthex(args, 0));
 	else if (c == 'X')
-		ft_puthex(args, 1);
+		return (ft_puthex(args, 1));
 	else if (c == '%')
-		write(1, "%", 1);
+		return (write(1, "%", 1));
+	else
+		return (0);
 }
 
 int	ft_printf(char const *format, ...)
@@ -41,19 +43,22 @@ int	ft_printf(char const *format, ...)
 	va_list	args;
 
 	i = 0;
+	ans = 0;
 	va_start(args, format);
 	while (format[i])
 	{
 		if (format[i] != '%')
+		{
 			write(1, &format[i], 1);
+			ans++;
+		}
 		else
 		{
 			i++;
-			ft_choose_option(format[i], args);
+			ans += ft_choose_option(format[i], args);
 		}
 		i++;
 	}
-	ans = ft_strlen(format);
 	return (ans);
 }
 /*
@@ -62,10 +67,8 @@ int	main(void)
 	char	*res;
 
 	res = "hola";
-	printf("Messi %p, %c, %d, %i, %u, %x, %X\n", &res, 'c', 077, 067,
-		-27198912, 3287421, 3287421);
-	ft_printf("Messi %p, %c, %d, %i, %u, %x, %X\n", &res, 'c', 077, 067,
-		-27198912, 3287421, 3287421);
+	printf("%d\n", printf("%d\n", 0));
+	printf("%d\n", ft_printf("%d\n", 0));
 	return (0);
 }
 */

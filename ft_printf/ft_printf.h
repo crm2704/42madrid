@@ -10,20 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "libft/libft.h"
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
 
 int		ft_printf(char const *, ...);
-void	ft_putchar(va_list args);
-void	ft_putstr(va_list args);
-void	ft_putmem(va_list args);
-void	ft_putnbr(va_list args);
-void	ft_putunsigned(va_list args);
-void	ft_puthex(va_list args, int mayus);
+int		ft_putchar(va_list args);
+int		ft_putstr(va_list args);
+int		ft_putmem(va_list args);
+int		ft_putnbr(va_list args);
+int		ft_putunsigned(va_list args);
+int		ft_puthex(va_list args, int mayus);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putchar_fd(char c, int fd);
+size_t	ft_strlen(char const *s);
+int		ft_putnbr_fd(int n, int fd);
 
 #endif

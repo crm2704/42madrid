@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static char	ft_choosechr(size_t n, int mayus)
 {
@@ -77,19 +77,21 @@ static char	*ft_to_hex(size_t ptr, int mayus)
 	return (res);
 }
 
-void	ft_putmem(va_list args)
+int	ft_putmem(va_list args)
 {
 	size_t	ptr;
 	char	*res;
+	int		n;
 
 	ptr = (size_t)va_arg(args, void *);
 	res = ft_to_hex(ptr, 0);
 	ft_putstr_fd("0x", 1);
 	ft_putstr_fd(res, 1);
-	free(res);
+	n = ft_strlen(res);
+	return (free(res), n + 2);
 }
 
-void	ft_puthex(va_list args, int mayus)
+int	ft_puthex(va_list args, int mayus)
 {
 	size_t	n;
 	char	*res;
@@ -97,4 +99,6 @@ void	ft_puthex(va_list args, int mayus)
 	n = (size_t)va_arg(args, size_t);
 	res = ft_to_hex(n, mayus);
 	ft_putstr_fd(res, 1);
+	n = ft_strlen(res);
+	return (free(res), n);
 }

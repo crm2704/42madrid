@@ -58,14 +58,14 @@ static int	aux(int n, int fd)
 	if (n / 10 == 0)
 	{
 		w = n + '0';
-		write(fd, &w, 1);
+		ft_putchar_fd(w, 1);
 		return (1);
 	}
 	else
 	{
 		cont = aux(n / 10, fd);
 		w = (n % 10) + '0';
-		write(fd, &w, 1);
+		ft_putchar_fd(w, 1);
 		return (cont + 1);
 	}
 }

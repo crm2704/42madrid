@@ -28,8 +28,8 @@ int	ft_putunsigned(va_list args)
 
 	n = (int)va_arg(args, int);
 	num = (unsigned int)n;
-	n = (num) % 10;
-	num /= 10;
+	n = (num) / 10;
+	num = n % 10;
 	prnt = ft_putnbr_fd(num, 1);
 	n = ft_putnbr_fd(n, 1);
 	if (num > 0)

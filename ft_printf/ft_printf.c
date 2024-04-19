@@ -59,16 +59,54 @@ int	ft_printf(char const *format, ...)
 		}
 		i++;
 	}
+	va_end(args);
 	return (ans);
 }
-/*
-int	main(void)
-{
-	char	*res;
 
-	res = "hola";
-	printf("%d\n", printf("%d\n", 0));
-	printf("%d\n", ft_printf("%d\n", 0));
-	return (0);
+/*
+int main(void)
+{
+	char *str = "Hello, World!";
+	int num = 4232412;
+	unsigned int unum = -42;
+	void *ptr = &num;
+	int ret1, ret2;
+
+	printf("Testing string: ");
+	ret1 = printf("%s\n", str);
+	ret2 = ft_printf("%s\n", str);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing integer: ");
+	ret1 = printf("%d\n", num);
+	ret2 = ft_printf("%d\n", num);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing unsigned integer: ");
+	ret1 = printf("%u\n", unum);
+	ret2 = ft_printf("%u\n", unum);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing hexadecimal: ");
+	ret1 = printf("%x\n", num);
+	ret2 = ft_printf("%x\n", num);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing uppercase hexadecimal: ");
+	ret1 = printf("%X\n", num);
+	ret2 = ft_printf("%X\n", num);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing pointer: ");
+	ret1 = printf("%p\n", ptr);
+	ret2 = ft_printf("%p\n", ptr);
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	printf("Testing percentage: ");
+	ret1 = printf("%%\n");
+	ret2 = ft_printf("%%\n");
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+
+	return 0;
 }
 */

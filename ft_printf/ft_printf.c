@@ -33,7 +33,7 @@ static int	ft_choose_option(char c, va_list args)
 	else if (c == '%')
 		return (write(1, "%", 1));
 	else
-		return (0);
+		return (1);
 }
 
 int	ft_printf(char const *format, ...)
@@ -55,58 +55,56 @@ int	ft_printf(char const *format, ...)
 		else
 		{
 			i++;
-			ans += ft_choose_option(format[i], args);
+			if (format[i])
+				ans += ft_choose_option(format[i], args);
 		}
-		i++;
+		if (format[i])
+			i++;
 	}
 	va_end(args);
 	return (ans);
 }
-
 /*
-int main(void)
+int	main(void)
 {
-	char *str = "Hello, World!";
-	int num = 4232412;
-	unsigned int unum = -42;
-	void *ptr = &num;
+	char			*str;
+	int				num;
+	unsigned int	unum;
+	void			*ptr;
+
+	str = "Hello, World!";
+	num = 4232412;
+	unum = -42;
+	ptr = &num;
 	int ret1, ret2;
-
 	printf("Testing string: ");
-	ret1 = printf("%s\n", str);
-	ret2 = ft_printf("%s\n", str);
+	ret1 = printf("%s\n%", str);
+	ret2 = ft_printf("%s\n%", str);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing integer: ");
 	ret1 = printf("%d\n", num);
 	ret2 = ft_printf("%d\n", num);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing unsigned integer: ");
 	ret1 = printf("%u\n", unum);
 	ret2 = ft_printf("%u\n", unum);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing hexadecimal: ");
 	ret1 = printf("%x\n", num);
 	ret2 = ft_printf("%x\n", num);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing uppercase hexadecimal: ");
 	ret1 = printf("%X\n", num);
 	ret2 = ft_printf("%X\n", num);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing pointer: ");
 	ret1 = printf("%p\n", ptr);
 	ret2 = ft_printf("%p\n", ptr);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
 	printf("Testing percentage: ");
 	ret1 = printf("%%\n");
 	ret2 = ft_printf("%%\n");
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
-
-	return 0;
+	return (0);
 }
 */

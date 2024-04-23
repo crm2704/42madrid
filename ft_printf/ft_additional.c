@@ -70,7 +70,7 @@ static int	aux(int n, int fd, int cont)
 
 int	ft_putnbr_fd(int n, int fd)
 {
-	int cont;
+	int	cont;
 
 	cont = 0;
 	if (n == -2147483648)

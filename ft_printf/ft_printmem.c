@@ -47,15 +47,13 @@ static size_t	ft_cont_malloc(size_t ptr)
 	return (ans);
 }
 
-static char	*ft_to_hex(size_t ptr, int mayus)
+static char	*ft_to_hex(size_t ptr, int mayus, size_t i)
 {
 	char	c;
 	size_t	n;
-	size_t	i;
-	char	*res;
 	int		flag;
+	char	*res;
 
-	i = ft_cont_malloc(ptr);
 	res = malloc(i + 1);
 	if (res == NULL)
 		return (NULL);
@@ -80,11 +78,13 @@ static char	*ft_to_hex(size_t ptr, int mayus)
 int	ft_putmem(va_list args)
 {
 	size_t	ptr;
+	size_t	i;
 	char	*res;
 	int		n;
 
-	ptr = (size_t)va_arg(args, void *);
-	res = ft_to_hex(ptr, 0);
+	ptr = va_arg(args, size_t);
+	i = ft_cont_malloc(ptr);
+	res = ft_to_hex(ptr, 0, i);
 	ft_putstr_fd("0x", 1);
 	ft_putstr_fd(res, 1);
 	n = ft_strlen(res);
@@ -93,11 +93,13 @@ int	ft_putmem(va_list args)
 
 int	ft_puthex(va_list args, int mayus)
 {
-	size_t	n;
-	char	*res;
+	unsigned int	n;
+	char			*res;
+	size_t			i;
 
-	n = (size_t)va_arg(args, size_t);
-	res = ft_to_hex(n, mayus);
+	n = va_arg(args, unsigned int);
+	i = ft_cont_malloc(n);
+	res = ft_to_hex(n, mayus, i);
 	ft_putstr_fd(res, 1);
 	n = ft_strlen(res);
 	return (free(res), n);

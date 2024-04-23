@@ -39,7 +39,7 @@ static int	aux(unsigned int n, int fd, int cont)
 	}
 }
 
-int	ft_putunsigned_fd(unsigned int n, int fd)
+static int	ft_putunsigned_aux(unsigned int n)
 {
 	int	cont;
 
@@ -53,6 +53,6 @@ int	ft_putunsigned(va_list args)
 	int				prnt;
 
 	num = va_arg(args, unsigned int);
-	prnt = ft_putunsigned_fd(num, 1);
+	prnt = ft_putunsigned_aux(num);
 	return (prnt);
 }

@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		ft_printf(char const *, ...);
+int		ft_printf(char const *format, ...);
 int		ft_putchar(va_list args);
 int		ft_putstr(va_list args);
 int		ft_putmem(va_list args);
@@ -28,5 +28,6 @@ int		ft_putstr_fd(char *s, int fd);
 int		ft_putchar_fd(char c, int fd);
 size_t	ft_strlen(char const *s);
 int		ft_putnbr_fd(int n, int fd);
+int		ft_putunsigned(va_list args);
 
 #endif

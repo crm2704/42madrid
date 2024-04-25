@@ -15,11 +15,12 @@
 
 char	*get_next_line(int fd)
 {
-	t_list		*root;
-	static int	pos;
-	int			found;
-	char		*buff;
-	int			i;
+	t_list			*root;
+	static ssize_t	pos;
+	ssize_t			found;
+	char			*buff;
+	char			*res;
+	ssize_t			i;
 
 	pos = 0;
 	found = 0;
@@ -27,17 +28,19 @@ char	*get_next_line(int fd)
 	{
 		ft_lstadd_back(&root, ft_lstnew(buff));
 		i = 0;
-		while (buff[i])
+		while (root->content[i] && found == 0)
 		{
-			if (buff[i] == '\n')
+			if (root->content[i] == '\n')
 			{
 				found = 1;
-				ft_next_line(start, pos, BUFFER_SIZE);
+				res = ft_next_line(start, pos, BUFFER_SIZE);
+				// se me ocurre que esto devuelva  un struct de res y lo que sobra para meterlo como nuevo nodo
 			}
 			i++;
 			pos++;
 		}
 	}
+	return (res);
 }
 
 /*

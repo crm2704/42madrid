@@ -24,8 +24,6 @@ typedef struct s_list
 
 char				*get_next_line(int fd);
 char				*ft_next_line(t_list *root, ssize_t i);
-void				ft_freemem(t_list *start);
-t_list				*ft_lstnew(void *content);
-void				ft_lstadd_back(t_list **lst, t_list *new);
+void				*ft_memcpy(void *dest, const void *src, size_t n);
 
 #endif

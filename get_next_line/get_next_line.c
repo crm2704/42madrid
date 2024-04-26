@@ -15,32 +15,28 @@
 
 char	*get_next_line(int fd)
 {
-	t_list			*root;
-	static ssize_t	pos;
-	ssize_t			found;
-	char			*buff;
-	char			*res;
-	ssize_t			i;
+	t_list	*buff;
+	char	*line;
+	ssize_t	num_lines;
+	char	*res;
+	ssize_t	bytes_read;
 
-	pos = 0;
-	found = 0;
-	while ((read(fd, buff, BUFFER_SIZE)) > 0 && found == 0)
+	line = malloc(BUFFER_SIZE + 1);
+	num_lines = 0;
+	while ((bytes_read = read(fd, line, BUFFER_SIZE)) > 0)
 	{
-		ft_lstadd_back(&root, ft_lstnew(buff));
-		i = 0;
-		while (root->content[i] && found == 0)
+		line[bytes_read] = '\0';
+		// ampliar y llenar la lista
+		buff = ft_new_buff(buff, line, num_lines++);
+		if (ft_look_for_newline(buff) == 1)
 		{
-			if (root->content[i] == '\n')
-			{
-				found = 1;
-				res = ft_next_line(start, pos, BUFFER_SIZE);
-				// se me ocurre que esto devuelva  un struct de res y lo que sobra para meterlo como nuevo nodo
-			}
-			i++;
-			pos++;
+			// rellenar res
+			// libero buff
+			// lo que sobra de nuevo a buff
+			res = ft_fill_res(buff);
+			return (res);
 		}
 	}
-	return (res);
 }
 
 /*

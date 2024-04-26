@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_next_line(t_list *root, ssize_t pos, ssize_t BUFFER_SIZE)
+char	*ft_next_line(t_list *root, ssize_t pos, ssize_t bytes_count)
 {
 	char			*res;
 	static ssize_t	temp;
@@ -24,7 +24,6 @@ char	*ft_next_line(t_list *root, ssize_t pos, ssize_t BUFFER_SIZE)
 	found = 0;
 	temp = 0;
 	res = (char *)malloc((pos - temp + 1) * sizeof(char));
-	node = 0;
 	del = root;
 	while (root != NULL && found == 0)
 	{
@@ -47,10 +46,11 @@ char	*ft_next_line(t_list *root, ssize_t pos, ssize_t BUFFER_SIZE)
 			temp -= BUFFER_SIZE;
 		}
 	}
+	root->content = (char *)root->content;
 	while (root->content[i])
 		sobra[i++] = root->content[i++];
 	ft_freemem(del);
-	ft_lstadd_back(&root, sobra);
+	ft_lstadd_back(&root, ft_lstnew(sobra));
 	return (res);
 }
 

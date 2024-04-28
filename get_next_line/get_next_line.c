@@ -11,34 +11,11 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#define BUFFER_SIZE 255
 
 char	*get_next_line(int fd)
 {
-	t_list	*buff;
-	char	*line;
-	ssize_t	num_lines;
-	char	*res;
-	ssize_t	bytes_read;
-
-	line = malloc(BUFFER_SIZE + 1);
-	num_lines = 0;
-	while ((bytes_read = read(fd, line, BUFFER_SIZE)) > 0)
-	{
-		line[bytes_read] = '\0';
-		// ampliar y llenar la lista
-		buff = ft_new_buff(buff, line, num_lines++);
-		if (ft_look_for_newline(buff) == 1)
-		{
-			// rellenar res
-			// libero buff
-			// lo que sobra de nuevo a buff
-			res = ft_fill_res(buff);
-			return (res);
-		}
-	}
+	
 }
-
 /*
 #include <fcntl.h>
 #include <stdio.h>
@@ -53,7 +30,7 @@ int	main(void)
 	int		i;
 	char	*line;
 
-	srand(time(NULL)); // Seed the random number generator
+	srand(time(NULL));  // Seed the random number generator
 	str = malloc(2001); // 2000 characters + '\0'
 	if (str == NULL)
 	{

@@ -16,14 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
+# ifndef BUFFER_SIZE
+#define BUFFER_SIZE 255
+# endif
 
 char				*get_next_line(int fd);
-char				*ft_next_line(t_list *root, ssize_t i);
-void				*ft_memcpy(void *dest, const void *src, size_t n);
 
 #endif

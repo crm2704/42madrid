@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	ft_freemem(char **buff)
+static void	ft_freemem(char **buff)
 {
 	if (*buff != NULL)
 	{
@@ -21,7 +21,7 @@ void	ft_freemem(char **buff)
 	}
 }
 
-char	*ft_reuse(char **buff)
+static char	*ft_reuse(char **buff)
 {
 	if (*buff != NULL)
 	{
@@ -31,35 +31,44 @@ char	*ft_reuse(char **buff)
 	return (*buff);
 }
 
-char	*ft_check_newline(char **tmp, char **buff)
+static char	*ft_check_newline(char **tmp, char **buff, char c)
 {
 	char	*res;
-	int		i;
+	size_t	i;
 	char	*temp;
 
 	i = 0;
 	temp = ft_strjoin(*buff, *tmp);
-	while (temp[i])
+	while (i <= ft_strlen(temp))
 	{
-		if (temp[i] == '\n')
+		if (temp[i] == c)
 		{
 			res = ft_substr(temp, 0, (size_t)i);
 			*buff = ft_reuse(buff);
 			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
 			*tmp = ft_reuse(tmp);
 			free(temp);
+			if (c == '\0')
+			{
+				ft_freemem(buff);
+				ft_freemem(tmp);
+			}
 			return (res);
 		}
 		i++;
 	}
-	*buff = ft_reuse(buff);
-    *buff = ft_strdup(temp);
-    *tmp = ft_reuse(tmp);
-    free(temp);
+	if (c == '\n')
+	{
+		*buff = ft_reuse(buff);
+		*buff = ft_strdup(temp);
+		*tmp = ft_reuse(tmp);
+		free(temp);
+	}
 	return (NULL);
 }
 
-char	*ft_search_newline(char *read_buffer, char **tmp, char **buff, int fd)
+static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
+		int fd)
 {
 	char	*res;
 	ssize_t	read_bytes;
@@ -67,12 +76,9 @@ char	*ft_search_newline(char *read_buffer, char **tmp, char **buff, int fd)
 	res = NULL;
 	while (res == NULL && (read_bytes = read(fd, read_buffer, BUFFER_SIZE)) > 0)
 	{
-		if (read_bytes > 0)
-		{
-			read_buffer[read_bytes] = '\0';
-			*tmp = ft_strjoin(*tmp, read_buffer);
-			res = ft_check_newline(tmp, buff);
-		}
+		read_buffer[read_bytes] = '\0';
+		*tmp = ft_strjoin(*tmp, read_buffer);
+		res = ft_check_newline(tmp, buff, '\n');
 	}
 	if (read_bytes < 0)
 	{
@@ -83,13 +89,25 @@ char	*ft_search_newline(char *read_buffer, char **tmp, char **buff, int fd)
 	}
 	if (res != NULL)
 		return (res);
-	else if (read_bytes == 0 && ft_strlen(*tmp) == 0)
+	else if (read_bytes == 0 && ft_strlen(*buff) == 0)
 	{
 		ft_freemem(tmp);
+		ft_freemem(&read_buffer);
+		ft_freemem(buff);
 		return (NULL);
 	}
+	else if (read_bytes == 0 && ft_strlen(*buff) > 0)
+	{
+		ft_freemem(&read_buffer);
+		return (ft_check_newline(tmp, buff, '\0'));
+	}
 	else
-		return (*tmp);
+	{
+		ft_freemem(tmp);
+		ft_freemem(&read_buffer);
+		ft_freemem(buff);
+		return (NULL);
+	}
 }
 
 char	*get_next_line(int fd)
@@ -122,7 +140,7 @@ char	*get_next_line(int fd)
 	res = ft_search_newline(read_buffer, &tmp, &buff[fd], fd);
 	return (res);
 }
-
+/*
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -148,4 +166,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-/**/
+*/

@@ -12,11 +12,117 @@
 
 #include "get_next_line.h"
 
+void	ft_freemem(char **buff)
+{
+	if (*buff != NULL)
+	{
+		free(*buff);
+		*buff = NULL;
+	}
+}
+
+char	*ft_reuse(char **buff)
+{
+	if (*buff != NULL)
+	{
+		free(*buff);
+		*buff = ft_strdup("");
+	}
+	return (*buff);
+}
+
+char	*ft_check_newline(char **tmp, char **buff)
+{
+	char	*res;
+	int		i;
+	char	*temp;
+
+	i = 0;
+	temp = ft_strjoin(*buff, *tmp);
+	while (temp[i])
+	{
+		if (temp[i] == '\n')
+		{
+			res = ft_substr(temp, 0, (size_t)i);
+			*buff = ft_reuse(buff);
+			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
+			*tmp = ft_reuse(tmp);
+			free(temp);
+			return (res);
+		}
+		i++;
+	}
+	*buff = ft_reuse(buff);
+    *buff = ft_strdup(temp);
+    *tmp = ft_reuse(tmp);
+    free(temp);
+	return (NULL);
+}
+
+char	*ft_search_newline(char *read_buffer, char **tmp, char **buff, int fd)
+{
+	char	*res;
+	ssize_t	read_bytes;
+
+	res = NULL;
+	while (res == NULL && (read_bytes = read(fd, read_buffer, BUFFER_SIZE)) > 0)
+	{
+		if (read_bytes > 0)
+		{
+			read_buffer[read_bytes] = '\0';
+			*tmp = ft_strjoin(*tmp, read_buffer);
+			res = ft_check_newline(tmp, buff);
+		}
+	}
+	if (read_bytes < 0)
+	{
+		ft_freemem(tmp);
+		ft_freemem(&read_buffer);
+		ft_freemem(buff);
+		return (NULL);
+	}
+	if (res != NULL)
+		return (res);
+	else if (read_bytes == 0 && ft_strlen(*tmp) == 0)
+	{
+		ft_freemem(tmp);
+		return (NULL);
+	}
+	else
+		return (*tmp);
+}
+
 char	*get_next_line(int fd)
 {
-	
+	static char	*buff[MAX_FD];
+	char		*tmp;
+	char		*read_buffer;
+	char		*res;
+
+	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
+		return (NULL);
+	read_buffer = malloc(BUFFER_SIZE * sizeof(char));
+	if (read_buffer == NULL)
+		return (NULL);
+	tmp = ft_strdup("");
+	if (tmp == NULL)
+	{
+		free(read_buffer);
+		return (NULL);
+	}
+	res = NULL;
+	if (buff[fd] == NULL)
+		buff[fd] = ft_strdup("");
+	if (buff[fd] == NULL)
+	{
+		free(read_buffer);
+		free(tmp);
+		return (NULL);
+	}
+	res = ft_search_newline(read_buffer, &tmp, &buff[fd], fd);
+	return (res);
 }
-/*
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,38 +132,9 @@ char	*get_next_line(int fd)
 int	main(void)
 {
 	int		fd;
-	char	*str;
 	int		i;
 	char	*line;
 
-	srand(time(NULL));  // Seed the random number generator
-	str = malloc(2001); // 2000 characters + '\0'
-	if (str == NULL)
-	{
-		return (1);
-	}
-	for (i = 0; i < 1999; i++) // Only fill up to index 1999
-	{
-		if (rand() % 100 < 5) // Approximately 5% chance
-		{
-			str[i] = '\n'; // Add a newline character
-		}
-		else
-		{
-			str[i] = 'a'; // Fill the string with 'a'
-		}
-	}
-	str[1999] = 'a';  // Ensure the last character is 'a'
-	str[2000] = '\0'; // Null-terminate the string
-	fd = open("file.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		free(str);
-		return (1);
-	}
-	write(fd, str, 2000); // Write the string to the file
-	close(fd);
-	free(str);
 	fd = open("file.txt", O_RDONLY);
 	if (fd == -1)
 	{
@@ -71,4 +148,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-*/
+/**/

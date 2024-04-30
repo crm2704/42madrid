@@ -44,7 +44,6 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 		if (temp[i] == c)
 		{
 			res = ft_substr(temp, 0, (size_t)i);
-			*buff = ft_reuse(buff);
 			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
 			*tmp = ft_reuse(tmp);
 			free(temp);
@@ -80,34 +79,17 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 		*tmp = ft_strjoin(*tmp, read_buffer);
 		res = ft_check_newline(tmp, buff, '\n');
 	}
-	if (read_bytes < 0)
-	{
-		ft_freemem(tmp);
-		ft_freemem(&read_buffer);
-		ft_freemem(buff);
-		return (NULL);
-	}
 	if (res != NULL)
 		return (res);
-	else if (read_bytes == 0 && ft_strlen(*buff) == 0)
+	else if (read_bytes < 0 || read_bytes == 0 && ft_strlen(*buff) == 0)
 	{
 		ft_freemem(tmp);
 		ft_freemem(&read_buffer);
 		ft_freemem(buff);
 		return (NULL);
 	}
-	else if (read_bytes == 0 && ft_strlen(*buff) > 0)
-	{
-		ft_freemem(&read_buffer);
-		return (ft_check_newline(tmp, buff, '\0'));
-	}
-	else
-	{
-		ft_freemem(tmp);
-		ft_freemem(&read_buffer);
-		ft_freemem(buff);
-		return (NULL);
-	}
+	ft_freemem(&read_buffer);
+	return (ft_check_newline(tmp, buff, '\0'));
 }
 
 char	*get_next_line(int fd)
@@ -123,24 +105,20 @@ char	*get_next_line(int fd)
 	if (read_buffer == NULL)
 		return (NULL);
 	tmp = ft_strdup("");
-	if (tmp == NULL)
-	{
-		free(read_buffer);
-		return (NULL);
-	}
 	res = NULL;
 	if (buff[fd] == NULL)
 		buff[fd] = ft_strdup("");
-	if (buff[fd] == NULL)
+	if (buff[fd] == NULL || tmp == NULL)
 	{
 		free(read_buffer);
-		free(tmp);
+		if (tmp != NULL)
+			free(tmp);
 		return (NULL);
 	}
 	res = ft_search_newline(read_buffer, &tmp, &buff[fd], fd);
 	return (res);
 }
-/*
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -166,4 +144,4 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-*/
+/**/

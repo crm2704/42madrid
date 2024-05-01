@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:44:04 by crubio            #+#    #+#             */
-/*   Updated: 2024/04/23 16:44:06 by crubio           ###   ########.fr       */
+/*   Updated: 2024/05/01 19:57:11 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static void	ft_freemem(char **buff)
 {
@@ -88,6 +88,9 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 		return (NULL);
 	}
 	ft_freemem(&read_buffer);
+	res = (ft_check_newline(tmp, buff, '\n'));
+	if (res != NULL)
+		return (res);
 	return (ft_check_newline(tmp, buff, '\0'));
 }
 
@@ -141,16 +144,13 @@ int	main(void)
 			printf("Failed to open file: %s\n", filenames[i]);
 			return (1);
 		}
-
 		while ((line = get_next_line(fd)) != NULL)
 		{
 			printf("From %s: %s\n", filenames[i], line);
 			free(line);
 		}
-
 		close(fd);
 	}
-
 	return (0);
 }
 */

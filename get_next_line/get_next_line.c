@@ -26,7 +26,7 @@ static char	*ft_reuse(char **buff)
 	if (*buff != NULL)
 	{
 		free(*buff);
-		*buff = ft_strdup("");
+		*buff = ft_strdup(""); // puede devolver null
 	}
 	return (*buff);
 }
@@ -38,13 +38,13 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 	char	*temp;
 
 	i = 0;
-	temp = ft_strjoin(*buff, *tmp);
+	temp = ft_strjoin(*buff, *tmp); // puede devolver null
 	while (i <= ft_strlen(temp))
 	{
 		if (temp[i] == c)
 		{
-			res = ft_substr(temp, 0, (size_t)i);
-			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
+			res = ft_substr(temp, 0, (size_t)i); // puede devolver null  incluso si srlen(temp) > 0
+			*buff = ft_substr(temp, i + 1, ft_strlen(temp)); // puede devolver null  incluso si srlen(temp) > 0
 			*tmp = ft_reuse(tmp);
 			free(temp);
 			if (c == '\0')
@@ -58,7 +58,7 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 	}
 	if (c == '\n')
 	{
-		*buff = ft_strdup(temp);
+		*buff = ft_strdup(temp); // puede devolver null
 		*tmp = ft_reuse(tmp);
 		free(temp);
 	}
@@ -72,11 +72,14 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 	ssize_t	read_bytes;
 
 	res = NULL;
-	while (res == NULL && (read_bytes = read(fd, read_buffer, BUFFER_SIZE)) > 0)
+	read_bytes = read(fd, read_buffer, BUFFER_SIZE);
+	while (res == NULL && read_bytes > 0)
 	{
 		read_buffer[read_bytes] = '\0';
-		*tmp = ft_strjoin(*tmp, read_buffer);
+		*tmp = ft_strjoin(*tmp, read_buffer); // puede devolver null
 		res = ft_check_newline(tmp, buff, '\n');
+		if (res == NULL)
+			read_bytes = read(fd, read_buffer, BUFFER_SIZE);
 	}
 	if (res != NULL)
 		return (res);
@@ -88,6 +91,9 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 		return (NULL);
 	}
 	ft_freemem(&read_buffer);
+	res = (ft_check_newline(tmp, buff, '\n'));
+	if (res != NULL)
+		return (res);
 	return (ft_check_newline(tmp, buff, '\0'));
 }
 
@@ -112,12 +118,44 @@ char	*get_next_line(int fd)
 		free(read_buffer);
 		if (tmp != NULL)
 			free(tmp);
+		else
+			free(buff[fd]);
 		return (NULL);
 	}
 	res = ft_search_newline(read_buffer, &tmp, &buff[fd], fd);
 	return (res);
 }
+
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+	char	*filename;
+
+	filename = "file1.txt";
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Failed to open file: %s\n", filename);
+		return (1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	printf("From %s: %s\n", filename, line);
+	free(line);
+	close(fd);
+	return (0);
+}
 /*
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -141,16 +179,13 @@ int	main(void)
 			printf("Failed to open file: %s\n", filenames[i]);
 			return (1);
 		}
-
 		while ((line = get_next_line(fd)) != NULL)
 		{
 			printf("From %s: %s\n", filenames[i], line);
 			free(line);
 		}
-
 		close(fd);
 	}
-
 	return (0);
 }
 */

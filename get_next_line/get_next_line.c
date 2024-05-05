@@ -43,8 +43,10 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 	{
 		if (temp[i] == c)
 		{
-			res = ft_substr(temp, 0, (size_t)i); // puede devolver null  incluso si srlen(temp) > 0
-			*buff = ft_substr(temp, i + 1, ft_strlen(temp)); // puede devolver null  incluso si srlen(temp) > 0
+			res = ft_substr(temp, 0, (size_t)i+1);            
+				// puede devolver null  incluso si strlen(temp) > 0
+			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
+				// puede devolver null  incluso si strlen(temp) > 0
 			*tmp = ft_reuse(tmp);
 			free(temp);
 			if (c == '\0')
@@ -77,6 +79,12 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 	{
 		read_buffer[read_bytes] = '\0';
 		*tmp = ft_strjoin(*tmp, read_buffer); // puede devolver null
+		if (*tmp == NULL)
+		{
+			ft_freemem(buff);
+			ft_freemem(&read_buffer);
+			return (NULL);
+		}
 		res = ft_check_newline(tmp, buff, '\n');
 		if (res == NULL)
 			read_bytes = read(fd, read_buffer, BUFFER_SIZE);
@@ -146,16 +154,16 @@ int	main(void)
 	}
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("%s\n", line);
+		printf("%s", line);
 		free(line);
 	}
-	printf("From %s: %s\n", filename, line);
-	free(line);
+	//printf("From %s: %s\n", filename, line);
+	//free(line);
 	close(fd);
 	return (0);
 }
-/*
 
+/*
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -186,6 +194,23 @@ int	main(void)
 		}
 		close(fd);
 	}
+	return (0);
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	char *line;
+
+	while ((line = get_next_line(0)) != NULL) // 0 es el descriptor de archivo para stdin
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	free(line);
 	return (0);
 }
 */

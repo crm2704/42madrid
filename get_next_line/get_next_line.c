@@ -21,13 +21,13 @@ static void	ft_freemem(char **buff)
 	}
 }
 
-static char	*ft_reuse(char **buff)
+static char	*ft_reuse(char **buff, char *str)
 {
 	if (*buff != NULL)
 	{
-		free(*buff);
-		*buff = ft_strdup(""); // puede devolver null
+		free(*buff); // puede devolver null
 	}
+	*buff = ft_strdup(str);
 	return (*buff);
 }
 
@@ -38,16 +38,29 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 	char	*temp;
 
 	i = 0;
-	temp = ft_strjoin(*buff, *tmp); // puede devolver null
+	temp = ft_strjoin(*buff, *tmp);
+	if (temp == NULL)
+	{
+		ft_freemem(buff);
+		ft_freemem(tmp);
+		return (NULL);
+	}
 	while (i <= ft_strlen(temp))
 	{
 		if (temp[i] == c)
 		{
-			res = ft_substr(temp, 0, (size_t)i+1);            
-				// puede devolver null  incluso si strlen(temp) > 0
+			res = ft_substr(temp, 0, (size_t)i + 1);
 			*buff = ft_substr(temp, i + 1, ft_strlen(temp));
-				// puede devolver null  incluso si strlen(temp) > 0
-			*tmp = ft_reuse(tmp);
+			*tmp = ft_reuse(tmp, "");
+			if (*tmp == NULL || *buff == NULL)
+			{
+				if (*tmp == NULL)
+					ft_freemem(buff);
+				if (*buff == NULL)
+					ft_freemem(tmp);
+				free(temp);
+				return (NULL);
+			}
 			free(temp);
 			if (c == '\0')
 			{
@@ -60,10 +73,17 @@ static char	*ft_check_newline(char **tmp, char **buff, char c)
 	}
 	if (c == '\n')
 	{
-		*buff = ft_strdup(temp); // puede devolver null
-		*tmp = ft_reuse(tmp);
-		free(temp);
+		*buff = ft_reuse(buff, temp);
+		*tmp = ft_reuse(tmp, "");
+		if (*tmp == NULL || *buff == NULL)
+		{
+			ft_freemem(buff);
+			ft_freemem(tmp);
+			free(temp);
+			return (NULL);
+		}
 	}
+	free(temp);
 	return (NULL);
 }
 
@@ -79,26 +99,27 @@ static char	*ft_search_newline(char *read_buffer, char **tmp, char **buff,
 	{
 		read_buffer[read_bytes] = '\0';
 		*tmp = ft_strjoin(*tmp, read_buffer); // puede devolver null
-		if (*tmp == NULL)
-		{
-			ft_freemem(buff);
-			ft_freemem(&read_buffer);
-			return (NULL);
-		}
 		res = ft_check_newline(tmp, buff, '\n');
 		if (res == NULL)
+		{
+			ft_freemem(&read_buffer);
+			if (*buff == NULL)
+				return (NULL);
+			read_buffer = malloc(BUFFER_SIZE * sizeof(char));
+			if (read_buffer == NULL)
+				return (NULL);
 			read_bytes = read(fd, read_buffer, BUFFER_SIZE);
+		}
 	}
+	ft_freemem(&read_buffer);
 	if (res != NULL)
 		return (res);
 	else if (read_bytes < 0 || (read_bytes == 0 && ft_strlen(*buff) == 0))
 	{
 		ft_freemem(tmp);
-		ft_freemem(&read_buffer);
 		ft_freemem(buff);
 		return (NULL);
 	}
-	ft_freemem(&read_buffer);
 	res = (ft_check_newline(tmp, buff, '\n'));
 	if (res != NULL)
 		return (res);
@@ -126,11 +147,17 @@ char	*get_next_line(int fd)
 		free(read_buffer);
 		if (tmp != NULL)
 			free(tmp);
-		else
+		if (buff[fd] != NULL)
 			free(buff[fd]);
 		return (NULL);
 	}
 	res = ft_search_newline(read_buffer, &tmp, &buff[fd], fd);
+	if (res == NULL)
+	{
+		ft_freemem(buff);
+		if (tmp != NULL)
+			free(tmp);
+	}
 	return (res);
 }
 
@@ -145,7 +172,7 @@ int	main(void)
 	char	*line;
 	char	*filename;
 
-	filename = "file1.txt";
+	filename = "file3.txt";
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -157,8 +184,8 @@ int	main(void)
 		printf("%s", line);
 		free(line);
 	}
-	//printf("From %s: %s\n", filename, line);
-	//free(line);
+	// printf("From %s: %s\n", filename, line);
+	// free(line);
 	close(fd);
 	return (0);
 }
@@ -201,11 +228,12 @@ int	main(void)
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void)
+int	main(void)
 {
-	char *line;
+	char	*line;
 
-	while ((line = get_next_line(0)) != NULL) // 0 es el descriptor de archivo para stdin
+	while ((line = get_next_line(0)) != NULL)
+		// 0 es el descriptor de archivo para stdin
 	{
 		printf("%s\n", line);
 		free(line);

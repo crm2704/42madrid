@@ -12,33 +12,33 @@
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin(char *str1, char *str2)
 {
 	char	*ans;
 	int		i;
 	int		j;
-	char	*s1;
-	char	*s2;
 
-	s1 = (char *)str1;
-	s2 = (char *)str2;
-	ans = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	ans = malloc(ft_strlen(str1) + ft_strlen(str2) + 1);
 	if (ans == NULL)
-		return (NULL);
-	i = 0;
-	while (s1[i])
 	{
-		ans[i] = s1[i];
+		str1 = ft_freemem(&str1);
+		return (NULL);
+	}
+	i = 0;
+	while (str1[i])
+	{
+		ans[i] = str1[i];
 		i++;
 	}
 	j = 0;
-	while (s2[j])
-		ans[i++] = s2[j++];
+	while (str2[j])
+		ans[i++] = str2[j++];
 	ans[i] = '\0';
+	str1 = ft_freemem(&str1);
 	return (ans);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*mem;
 
@@ -60,8 +60,11 @@ size_t	ft_strlen(char const *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
-		i++;
+	if (s != NULL)
+	{
+		while (s[i])
+			i++;
+	}
 	return (i);
 }
 
@@ -70,10 +73,8 @@ char	*ft_strdup(char const *s)
 	size_t	total;
 	size_t	i;
 	char	*ans;
-	char	*s1;
 
-	s1 = (char *)s;
-	total = ft_strlen(s1) + 1;
+	total = ft_strlen(s) + 1;
 	ans = malloc(total);
 	if (ans != NULL)
 	{
@@ -86,7 +87,7 @@ char	*ft_strdup(char const *s)
 	}
 	else
 		return (NULL);
-	ft_strlcpy(ans, s1, total);
+	ft_strlcpy(ans, s, total);
 	return (ans);
 }
 

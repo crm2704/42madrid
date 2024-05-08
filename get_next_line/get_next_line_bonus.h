@@ -25,10 +25,11 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *str1, char const *str2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char *str1, char *str2);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(char const *s);
 char	*ft_strdup(char const *s);
 size_t	ft_strlcpy(char *dest, char const *src, size_t dstsize);
+char	*ft_freemem(char **buff);
 
 #endif

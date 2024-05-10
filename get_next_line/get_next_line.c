@@ -116,7 +116,7 @@ int	main(void)
 	char	*line;
 	char	*filename;
 
-	filename = "file2.txt";
+	filename = "file1.txt";
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -132,7 +132,62 @@ int	main(void)
 	close(fd);
 	return (0);
 }
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+int main(void)
+{
+	char *line;
+	int fd;
+
+	// Prueba con un descriptor de archivo no válido
+	fd = -1;
+	line = get_next_line(fd);
+	if (line != NULL)
+	{
+		printf("Error: get_next_line should return NULL for invalid file descriptor, but it returned a string.\n");
+		free(line);
+	}
+
+	// Prueba con un descriptor de archivo que nunca se ha abierto
+	int unopened_fd = -1;
+	line = get_next_line(unopened_fd);
+	if (line != NULL)
+	{
+		printf("Error: get_next_line should return NULL for unopened file descriptor, but it returned a string.\n");
+		free(line);
+	}
+
+	// Prueba con un descriptor de archivo que se ha cerrado
+	fd = open("file1.txt", O_RDONLY); // Asume que file.txt existe
+	close(fd);
+	line = get_next_line(fd);
+	if (line != NULL)
+	{
+		printf("Error: get_next_line should return NULL for closed file descriptor, but it returned a string.\n");
+		free(line);
+	}
+
+	// Prueba con un descriptor de archivo que se ha cerrado y luego se ha vuelto a abrir
+	fd = open("file1.txt", O_RDONLY); // Asume que file.txt existe
+	close(fd);
+	fd = open("file1.txt", O_RDONLY); // Asume que file.txt existe
+	line = get_next_line(fd);
+	if (line == NULL)
+	{
+		printf("Error: get_next_line should return a string for valid file descriptor, but it returned NULL.\n");
+	}
+	else
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+
+	close(fd);
+
+	return 0;
+}
 
 #include <fcntl.h>
 #include <stdio.h>

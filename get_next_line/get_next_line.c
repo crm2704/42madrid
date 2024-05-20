@@ -90,7 +90,7 @@ static char	*ft_search_newline(char *read_buffer, char **buff, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*buff[MAX_FD];
-	char		read_buffer[BUFFER_SIZE];
+	char		read_buffer[BUFFER_SIZE + 1];
 	char		*res;
 
 	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 		buff[fd] = ft_freemem(&buff[fd]);
 	return (res);
 }
-/*
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -131,7 +131,7 @@ int	main(void)
 	printf("From %s: %s\n", filename, line);
 	close(fd);
 	return (0);
-}
+}/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>

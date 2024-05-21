@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 		buff[fd] = ft_freemem(&buff[fd]);
 	return (res);
 }
-
+/*
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -131,7 +131,7 @@ int	main(void)
 	printf("From %s: %s\n", filename, line);
 	close(fd);
 	return (0);
-}/*
+}
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>

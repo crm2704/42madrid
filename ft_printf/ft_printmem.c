@@ -83,10 +83,19 @@ int	ft_putmem(va_list args)
 	int		n;
 
 	ptr = va_arg(args, size_t);
-	i = ft_cont_malloc(ptr);
-	res = ft_to_hex(ptr, 0, i);
-	ft_putstr_fd("0x", 1);
-	ft_putstr_fd(res, 1);
+	if (ptr == 0)
+	{
+		ft_putstr_fd("(nil)", 1);
+		n = 5;
+		return (n);
+	}
+	else
+	{
+		i = ft_cont_malloc(ptr);
+		res = ft_to_hex(ptr, 0, i);
+		ft_putstr_fd("0x", 1);
+		ft_putstr_fd(res, 1);
+	}
 	n = ft_strlen(res);
 	return (free(res), n + 2);
 }

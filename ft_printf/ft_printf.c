@@ -107,4 +107,12 @@ int	main(void)
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	return (0);
 }
+
+#include <stdio.h>
+int main(int argc, char const *argv[])
+{
+	ft_printf("%p\n",  NULL);
+	printf("%p\n", NULL);
+	return 0;
+}
 */

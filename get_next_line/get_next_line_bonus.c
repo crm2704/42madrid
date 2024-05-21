@@ -90,7 +90,7 @@ static char	*ft_search_newline(char *read_buffer, char **buff, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*buff[MAX_FD];
-	char		read_buffer[BUFFER_SIZE];
+	char		read_buffer[BUFFER_SIZE + 1];
 	char		*res;
 
 	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)

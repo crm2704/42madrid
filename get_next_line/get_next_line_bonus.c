@@ -22,15 +22,11 @@ char	*ft_freemem(char **buff)
 	return (NULL);
 }
 
-static char	*ft_check_newline(char **buff, char c)
+static char	*ft_check_newline(char **buff, char c, char *res, size_t i)
 {
-	char	*res;
-	size_t	i;
 	char	*tmp;
 
 	tmp = ft_strdup(*buff);
-	res = NULL;
-	i = 0;
 	while (i <= ft_strlen(tmp))
 	{
 		if (tmp[i] == c)
@@ -54,18 +50,17 @@ static char	*ft_check_newline(char **buff, char c)
 	return (res);
 }
 
-static char	*ft_search_newline(char *read_buffer, char **buff, int fd)
+static char	*ft_search_newline(char *read_buffer, char **buff, int fd,
+		char *res)
 {
-	char	*res;
 	ssize_t	read_bytes;
 
 	read_bytes = read(fd, read_buffer, BUFFER_SIZE);
-	res = NULL;
 	while (read_bytes > 0 && res == NULL)
 	{
 		read_buffer[read_bytes] = '\0';
 		*buff = ft_strjoin(*buff, read_buffer);
-		res = ft_check_newline(buff, '\n');
+		res = ft_check_newline(buff, '\n', NULL, 0);
 		if (res == NULL)
 		{
 			if (*buff == NULL)
@@ -75,14 +70,11 @@ static char	*ft_search_newline(char *read_buffer, char **buff, int fd)
 	}
 	if (read_bytes < 0)
 		return (NULL);
-	else if (read_bytes == 0)
+	else if (read_bytes == 0 && ft_strlen(*buff) > 0)
 	{
-		if (ft_strlen(*buff) > 0)
-		{
-			res = ft_check_newline(buff, '\n');
-			if (res == NULL)
-				res = ft_check_newline(buff, '\0');
-		}
+		res = ft_check_newline(buff, '\n', NULL, 0);
+		if (res == NULL)
+			res = ft_check_newline(buff, '\0', NULL, 0);
 	}
 	return (res);
 }
@@ -105,111 +97,34 @@ char	*get_next_line(int fd)
 	return (res);
 }
 /*
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line.h"
+#include <fcntl.h>  // Para la función open y la constante O_RDONLY
+#include <stdio.h>  // Para la función printf
+#include <unistd.h> // Para la función close
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	char	*filename;
-
-	filename = "file2.txt";
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Failed to open file: %s\n", filename);
-		return (1);
+void	read_file(const char* filename) {
+	int fd = open(filename, O_RDONLY);
+	if (fd < 0) {
+		printf("Error opening file: %s\n", filename);
+		return ;
 	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
+
+	char *line;
+	while ((line = get_next_line(fd)) != NULL) {
 		printf("%s", line);
 		free(line);
 	}
-	printf("From %s: %s\n", filename, line);
+
 	close(fd);
-	return (0);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	char	*filename;
-
-	filename = "file1.txt";
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Failed to open file: %s\n", filename);
-		return (1);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	printf("From %s: %s\n", filename, line);
-	close(fd);
-	return (0);
-}
-
-
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h>
-
-#define NUM_FILES 3
-
-int	main(void)
-{
-	int		fd;
-	int		i;
-	char	*line;
-	char	*filenames[NUM_FILES] = {"file1.txt", "file2.txt", "file3.txt"};
-
-	for (i = 0; i < NUM_FILES; i++)
-	{
-		fd = open(filenames[i], O_RDONLY);
-		if (fd == -1)
-		{
-			printf("Failed to open file: %s\n", filenames[i]);
-			return (1);
-		}
-		while ((line = get_next_line(fd)) != NULL)
-		{
-			printf("From %s: %s\n", filenames[i], line);
-			free(line);
-		}
-		close(fd);
-	}
-	return (0);
-}
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int	main(void)
-{
-	char	*line;
-
-	while ((line = get_next_line(0)) != NULL)
-		// 0 es el descriptor de archivo para stdin
-	{
-		printf("%s\n", line);
-		free(line);
-	}
-	free(line);
+int	main(void) {
+	printf("Reading test.txt\n");
+	read_file("test.txt");
+	printf("\nReading no_newlines.txt\n");
+	read_file("no_newlines.txt");
+	printf("\nReading only_newline.txt\n");
+	read_file("only_newline.txt");
 	return (0);
 }
 */

@@ -69,7 +69,7 @@ static char	*ft_search_newline(char *read_buffer, char **buff, int fd,
 		}
 	}
 	if (read_bytes < 0)
-		return (NULL);
+		return (ft_freemem(buff));
 	else if (read_bytes == 0 && ft_strlen(*buff) > 0)
 	{
 		res = ft_check_newline(buff, '\n', NULL, 0);
@@ -96,7 +96,6 @@ char	*get_next_line(int fd)
 		buff[fd] = ft_freemem(&buff[fd]);
 	return (res);
 }
-
 /*
 #include "get_next_line.h"
 #include <fcntl.h> // Para la función open y la constante O_RDONLY
@@ -130,6 +129,8 @@ int	main(void)
 	read_file("no_newlines.txt");
 	printf("\nReading only_newline.txt\n");
 	read_file("only_newline.txt");
+	printf("\nReading prueba\n");
+	read_file("prueba");
 	return (0);
 }
  */

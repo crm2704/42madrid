@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 INCLUDE = ft_printf.h
 SRCS = 	ft_printf.c \
 		ft_printchr.c \

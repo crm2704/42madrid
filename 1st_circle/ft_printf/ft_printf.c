@@ -32,8 +32,11 @@ static int	ft_choose_option(char c, va_list args)
 		return (ft_puthex(args, 1));
 	else if (c == '%')
 		return (write(1, "%", 1));
-	else
-		return (1);
+	else if (c != ' ')
+	{
+		write(1, "%", 1);
+		return (write(1, &c, 1));
+	}
 }
 
 int	ft_printf(char const *format, ...)
@@ -63,7 +66,6 @@ int	ft_printf(char const *format, ...)
 	va_end(args);
 	return (ans);
 }
-
 /*
 int	main(void)
 {
@@ -78,8 +80,8 @@ int	main(void)
 	ptr = &num;
 	int ret1, ret2;
 	printf("Testing string: \n");
-	ret1 = printf("%s\n", str);
-	ret2 = ft_printf("%s\n", str);
+	ret1 = printf("%s%d %%%d%%  % %L hola : %X\n", "", 0, 12);
+	ret2 = ft_printf("%s%d %%%d%%  % %L hola : %X\n", "", 0, 12);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	printf("Testing integer: \n");
 	ret1 = printf("%d\n", num);
@@ -114,7 +116,7 @@ int	main(void)
 	ret2 = ft_printf("%s\n%", str);
 	printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
 	printf("Testing mismatched format specifier and argument: \n");
-	ret1 = printf("%s\n", 12345); // This is undefined behavior
+	ret1 = printf("%s\n", 12345);    // This is undefined behavior
 	ret2 = ft_printf("%s\n", 12345); // This should also be undefined behavior
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	return (0);

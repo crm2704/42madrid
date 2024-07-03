@@ -63,8 +63,8 @@ int	ft_printf(char const *format, ...)
 	va_end(args);
 	return (ans);
 }
+
 /*
-}
 int	main(void)
 {
 	char			*str;
@@ -114,8 +114,9 @@ int	main(void)
 	ret2 = ft_printf("%s\n%", str);
 	printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
 	printf("Testing mismatched format specifier and argument: \n");
-    ret1 = printf("%s\n", 12345); // This is undefined behavior
-    ret2 = ft_printf("%s\n", 12345); // This should also be undefined behavior
-    printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+	ret1 = printf("%s\n", 12345); // This is undefined behavior
+	ret2 = ft_printf("%s\n", 12345); // This should also be undefined behavior
+	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	return (0);
+}
 */

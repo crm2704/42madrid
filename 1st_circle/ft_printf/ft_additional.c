@@ -49,7 +49,7 @@ size_t	ft_strlen(char const *s)
 	return (i);
 }
 
-static int	aux(int n, int fd, int cont)
+static int	aux_add(int n, int fd, int cont)
 {
 	char	w;
 
@@ -61,7 +61,7 @@ static int	aux(int n, int fd, int cont)
 	}
 	else
 	{
-		cont = aux(n / 10, fd, cont + 1);
+		cont = aux_add(n / 10, fd, cont + 1);
 		w = (n % 10) + '0';
 		ft_putchar_fd(w, 1);
 		return (cont);
@@ -86,7 +86,7 @@ int	ft_putnbr_fd(int n, int fd)
 			write(fd, "-", 1);
 			cont++;
 		}
-		cont += aux(n, fd, 0);
+		cont += aux_add(n, fd, 0);
 	}
 	return (cont);
 }

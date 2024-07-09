@@ -117,10 +117,12 @@ int	main(void)
 	ret1 = printf("%s\n%", str);
 	ret2 = ft_printf("%s\n%", str);
 	printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
-	printf("Testing mismatched format specifier and argument: \n");
-	ret1 = printf("%s\n", 12345);    // This is undefined behavior
-	ret2 = ft_printf("%s\n", 12345); // This should also be undefined behavior
-	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+	int i;
+    int j;
+    j = ft_printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+    ft_printf("%i\n",j);
+    i = printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+    printf("%i\n",i);
 	return (0);
 }
 */

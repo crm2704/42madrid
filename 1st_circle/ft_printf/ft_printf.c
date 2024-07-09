@@ -37,6 +37,8 @@ static int	ft_choose_option(char c, va_list args)
 		write(1, "%", 1);
 		return (write(1, &c, 1));
 	}
+	else
+		return (1);
 }
 
 int	ft_printf(char const *format, ...)

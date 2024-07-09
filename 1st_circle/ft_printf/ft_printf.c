@@ -80,8 +80,8 @@ int	main(void)
 	ptr = &num;
 	int ret1, ret2;
 	printf("Testing string: \n");
-	ret1 = printf("%s%d %%%d%%  % %L hola : %X\n", "", 0, 12);
-	ret2 = ft_printf("%s%d %%%d%%  % %L hola : %X\n", "", 0, 12);
+	ret1 = printf("%s%d %%%d%%\l%%L hola : %X\n", "", 0, 12);
+	ret2 = ft_printf("%s%d %%%d%%\l%%L hola : %X\n", "", 0, 12);
 	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	printf("Testing integer: \n");
 	ret1 = printf("%d\n", num);

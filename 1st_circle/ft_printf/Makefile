@@ -16,7 +16,7 @@ all: $(NAME)
 $(NAME): $(OBJS)  $(INCLUDE)
 	ar rcs $(NAME) $(OBJS)
 
-fclean: clean clean_bonus
+fclean: clean 
 	rm -f $(NAME)
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: crubio <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 19:51:26 by crubio            #+#    #+#             */
-/*   Updated: 2024/06/14 12:11:03 by crubio           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:13:39 by crubio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ static int	ft_choose_option(char c, va_list args)
 		return (ft_puthex(args, 1));
 	else if (c == '%')
 		return (write(1, "%", 1));
-	else if (c != ' ')
+	else
 	{
 		write(1, "%", 1);
-		return (write(1, &c, 1));
+		return (write(1, &c, 1) + 1);
 	}
-	else
-		return (1);
 }
 
 int	ft_printf(char const *format, ...)
@@ -68,7 +66,10 @@ int	ft_printf(char const *format, ...)
 	va_end(args);
 	return (ans);
 }
+
 /*
+#include <stdio.h>
+
 int	main(void)
 {
 	char			*str;
@@ -81,10 +82,14 @@ int	main(void)
 	unum = -42;
 	ptr = &num;
 	int ret1, ret2;
-	printf("Testing string: \n");
-	ret1 = printf("%s%d %%%d%%\l%%L hola : %X\n", "", 0, 12);
-	ret2 = ft_printf("%s%d %%%d%%\l%%L hola : %X\n", "", 0, 12);
-	printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+	//printf("Testing errors: \n");
+	//ret1 = printf("hola % % %L\n");
+	//ret2 = ft_printf("hola % % %L\n");
+	//printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
+	//printf("Testing string: \n");
+	//ret1 = printf("%s%d %%%d%%\l% %L hola : %X\n", "", 0, 12, 23);
+	//ret2 = ft_printf("%s%d %%%d%%\l% %L hola : %X\n", "", 0, 12, 23);
+	//printf("printf returned: %d, ft_printf returned: %d\n", ret1, ret2);
 	printf("Testing integer: \n");
 	ret1 = printf("%d\n", num);
 	ret2 = ft_printf("%d\n", num);
@@ -113,15 +118,23 @@ int	main(void)
 	ret1 = printf("%p\n", NULL);
 	ret2 = ft_printf("%p\n", NULL);
 	printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
-	printf("Testing percentage error: \n");
-	ret1 = printf("%s\n%", str);
-	ret2 = ft_printf("%s\n%", str);
-	printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
+	//printf("Testing percentage error: \n");
+	//ret1 = printf("%s\n%", str);
+	//ret2 = ft_printf("%s\n%", str);
+	//printf("printf returned : %d, ft_printf returned: %d\n", ret1, ret2);
 	int i;
     int j;
-    j = ft_printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+    j = ft_printf("%%%c%%	%s%%	%d%%   %i%%%u%%%x%%%X%%%% \
+    %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% \
+    %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42"\
+    , 42, 42 ,42 , 42, 42, 'B', "-42"\
+    , -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
     ft_printf("%i\n",j);
-    i = printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+    i = printf("%%%c%%	%s%%	%d%%   %i%%%u%%%x%%%X%%%% \
+    %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% \
+    %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%\n", 'A', "42"\
+    , 42, 42 ,42 , 42, 42, 'B', "-42"\
+    , -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
     printf("%i\n",i);
 	return (0);
 }

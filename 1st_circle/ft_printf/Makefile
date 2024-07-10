@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror
 INCLUDE = ft_printf.h
 SRCS = 	ft_printf.c \
 		ft_printchr.c \
@@ -21,8 +21,5 @@ fclean: clean clean_bonus
 
 clean:
 	rm -f $(OBJS)
-
-clean_bonus:
-	rm -f $(BONUS_OBJS)
 
 re: fclean all
